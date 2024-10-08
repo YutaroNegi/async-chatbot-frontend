@@ -1,50 +1,194 @@
-# React + TypeScript + Vite
+## 🗒️ Description
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a frontend application. It features a chat widget that allows users to interact with a chatbot, supporting actions such as sending, editing, and deleting messages. The frontend is built using **React**, **TypeScript**, and **Vite**, and integrates with a backend API developed using **Python** and **FastAPI**.
 
-Currently, two official plugins are available:
+## 🚀 Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend:**
 
-## Expanding the ESLint configuration
+  - React
+  - TypeScript
+  - Vite
+  - React Router DOM
+  - React Context API
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Testing:**
 
-- Configure the top-level `parserOptions` property like this:
+  - Vitest
+  - React Testing Library
+  - Jest DOM
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Code Quality:**
+
+  - ESLint
+  - Prettier
+  - Husky
+  - lint-staged
+
+- **Other Tools:**
+  - Git
+  - GitHub
+
+## 📂 Project Structure
+
+```
+async-chatbot-frontend/
+├── src/
+│   ├── components/
+│   │   ├── ChatWidget.tsx
+│   │   └── ChatWidget.test.tsx
+│   ├── context/
+│   │   └── ChatContext.tsx
+│   ├── pages/
+│   │   ├── Home.tsx
+│   │   └── Home.test.tsx
+│   ├── App.tsx
+│   ├── App.test.tsx
+│   ├── main.tsx
+│   ├── setupTests.ts
+│   └── index.css
+├── .eslintrc.js
+├── .gitignore
+├── .husky/
+│   └── pre-commit
+├── .prettierrc
+├── .prettierignore
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+└── README.md
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🛠️ Getting Started
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 1. Clone the Repository
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+git clone https://github.com/YutaroNegi/async-chatbot-frontend.git
+cd async-chatbot-frontend
 ```
+
+### 2. Install Dependencies
+
+Ensure you have **Node.js** and **npm** installed. Then, install the project dependencies:
+
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env` file in the root directory to store environment variables. Example:
+
+```env
+VITE_API_URL=http://localhost:8000
+```
+
+### 4. Run the Application
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the application.
+
+## 🧪 Testing
+
+### Run Tests
+
+Execute all tests using Vitest:
+
+```bash
+npm run test
+```
+
+### Test Coverage
+
+- **Component Rendering:** Ensures components render correctly.
+
+## 🔧 Code Formatting and Linting
+
+### Prettier
+
+Prettier is configured to maintain consistent code formatting.
+
+- **Format All Files:**
+
+  ```bash
+  npm run format
+  ```
+
+### ESLint
+
+ESLint is set up to enforce code quality and consistency.
+
+### Husky and lint-staged
+
+Pre-commit hooks are configured using Husky and lint-staged to automatically format and lint code before each commit.
+
+- **Automatic Formatting and Linting on Commit:**
+
+  Husky will trigger lint-staged to run Prettier and ESLint on staged files.
+
+## 📑 Scripts
+
+- **Start Development Server:**
+
+  ```bash
+  npm run dev
+  ```
+
+- **Build for Production:**
+
+  ```bash
+  npm run build
+  ```
+
+- **Preview Production Build:**
+
+  ```bash
+  npm run preview
+  ```
+
+- **Run Tests:**
+
+  ```bash
+  npm run test
+  ```
+
+- **Format Code:**
+
+  ```bash
+  npm run format
+  ```
+
+## 🔗 Integration with Backend API
+
+This frontend application is designed to integrate seamlessly with a backend API developed using **Python** and **FastAPI**. Ensure the backend is running and accessible at the URL specified in the `.env` file (`VITE_API_URL`).
+
+### API Endpoints
+
+- **Send Message:** `POST /messages/`
+- **Edit Message:** `PUT /messages/{id_message}`
+- **Delete Message:** `DELETE /messages/{id_message}`
+- **List Messages:** `GET /messages/`
+
+---
+
+## 🛠️ Setup Instructions
+
+For detailed setup instructions, refer to the sections above.
+
+---
+
+## 📚 Resources
+
+- [React Documentation](https://reactjs.org/docs/getting-started.html)
+- [Vite Documentation](https://vitejs.dev/guide/)
+- [Vitest Documentation](https://vitest.dev/)
+- [Prettier Documentation](https://prettier.io/docs/en/index.html)
+- [ESLint Documentation](https://eslint.org/docs/user-guide/getting-started)
+- [Husky Documentation](https://typicode.github.io/husky/#/)
+- [lint-staged Documentation](https://github.com/okonet/lint-staged)
