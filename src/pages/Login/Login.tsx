@@ -1,8 +1,12 @@
+// src/pages/LoginPage/Login.tsx
+
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const { login, register } = useAuth();
@@ -13,13 +17,44 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  // State for validation errors
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  // Validation regex patterns
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*\d).{8,}$/;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Reset previous errors
+    setEmailError('');
+    setPasswordError('');
+
+    let valid = true;
+
+    // Validate email
+    if (!emailRegex.test(email)) {
+      setEmailError('Please enter a valid email address.');
+      valid = false;
+    }
+
+    // Validate password
+    if (!passwordRegex.test(password)) {
+      setPasswordError(
+        'Password must be at least 8 characters long and contain at least one number.'
+      );
+      valid = false;
+    }
+
+    if (!valid) return;
+
     setIsLoading(true);
     try {
       if (isRegisterMode) {
         await register(email, password);
-        alert('Registration successful! Please log in to continue.');
+        toast.success('Registration successful! Please log in to continue.');
         setIsRegisterMode(false);
         navigate('/login');
       } else {
@@ -27,7 +62,12 @@ const Login = () => {
         navigate('/');
       }
     } catch (error: any) {
-      alert(error.response?.data?.detail || 'An error occurred');
+      // Extract meaningful error messages
+      const errorMessage =
+        error.response?.data?.detail?.[0]?.msg ||
+        error.response?.data?.detail ||
+        'An error occurred';
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -35,6 +75,7 @@ const Login = () => {
 
   return (
     <div className="login-page">
+      <ToastContainer />
       <div className="login-left">
         <h1>Welcome Back!</h1>
         <p>Log in to your account to continue.</p>
@@ -50,6 +91,11 @@ const Login = () => {
             required
             className="login-input"
           />
+          {emailError && (
+            <p data-testid="email-error" className="error-message">
+              {emailError}
+            </p>
+          )}
           <input
             type="password"
             placeholder="Password"
@@ -58,6 +104,11 @@ const Login = () => {
             required
             className="login-input"
           />
+          {passwordError && (
+            <p data-testid="password-error" className="error-message">
+              {passwordError}
+            </p>
+          )}
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? (
               <>
