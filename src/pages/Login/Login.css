@@ -79,6 +79,12 @@
   animation: spin 1s linear infinite;
 }
 
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
