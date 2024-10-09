@@ -1,0 +1,133 @@
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.login-left,
+.login-right {
+  flex: 1;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left {
+  background-color: #f5f5f5;
+}
+
+.login-left h1 {
+  font-size: 3rem;
+  color: #6a0dad;
+  margin-bottom: 1.25rem;
+}
+
+.login-left p {
+  font-size: 1.125rem;
+  color: #333333;
+}
+
+.login-right {
+  background-color: #ffffff;
+}
+
+.login-right h2 {
+  font-size: 2rem;
+  color: #6a0dad;
+  margin-bottom: 1.25rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-input {
+  margin-bottom: 0.9375rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 0.25rem;
+}
+
+.login-button {
+  padding: 0.75rem;
+  background-color: #6a0dad;
+  color: #ffffff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-button:disabled {
+  background-color: #a078d1;
+  cursor: not-allowed;
+}
+
+.login-button:hover:not(:disabled) {
+  background-color: #5a0ca9;
+}
+
+.login-button .spinner {
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.toggle-button {
+  margin-top: 1.25rem; /* 20px -> 1.25rem */
+  background: none;
+  border: none;
+  color: #6a0dad; /* Purple color */
+  font-size: 0.875rem; /* 14px -> 0.875rem */
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.toggle-button:disabled {
+  color: #a078d1; /* Lighter purple when disabled */
+  cursor: not-allowed;
+}
+
+.toggle-button:hover:not(:disabled) {
+  color: #5a0ca9; /* Darker purple on hover */
+}
+
+@media (max-width: 48rem) {
+  /* 768px -> 48rem */
+  .login-page {
+    flex-direction: column;
+  }
+
+  .login-left,
+  .login-right {
+    padding: 1.25rem; /* 20px -> 1.25rem */
+  }
+
+  .login-left h1 {
+    font-size: 2.25rem; /* 36px -> 2.25rem */
+    text-align: center;
+  }
+
+  .login-left p {
+    text-align: center;
+  }
+
+  .login-right h2 {
+    text-align: center;
+  }
+}
