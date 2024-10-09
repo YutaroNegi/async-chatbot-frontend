@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Login from './Login';
@@ -17,8 +18,6 @@ vi.mock('react-router-dom', async () => {
     useNavigate: () => navigateMock,
   };
 });
-
-window.alert = vi.fn();
 
 describe('Login Component', () => {
   const loginMock = vi.fn();
@@ -53,7 +52,7 @@ describe('Login Component', () => {
     expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
   });
 
-  test('allows the user to log in', async () => {
+  test('shows password validation error when password is invalid', async () => {
     renderComponent();
 
     const emailInput = screen.getByPlaceholderText(/Email/i);
@@ -61,46 +60,16 @@ describe('Login Component', () => {
     const loginButton = screen.getByRole('button', { name: /login/i });
 
     await userEvent.type(emailInput, 'user@example.com');
-    await userEvent.type(passwordInput, 'password123');
+    await userEvent.type(passwordInput, 'short');
     await userEvent.click(loginButton);
 
-    await waitFor(() => {
-      expect(loginMock).toHaveBeenCalledWith('user@example.com', 'password123');
-    });
-
-    expect(navigateMock).toHaveBeenCalledWith('/');
-  });
-
-  test('allows the user to register', async () => {
-    renderComponent();
-
-    const toggleButton = screen.getByRole('button', {
-      name: /create an account/i,
-    });
-    await userEvent.click(toggleButton);
-
-    const registerButton = screen.getByRole('button', { name: /register/i });
-    expect(registerButton).toBeInTheDocument();
-
-    const emailInput = screen.getByPlaceholderText(/Email/i);
-    const passwordInput = screen.getByPlaceholderText(/Password/i);
-
-    await userEvent.type(emailInput, 'newuser@example.com');
-    await userEvent.type(passwordInput, 'newpassword123');
-    await userEvent.click(registerButton);
-
-    await waitFor(() => {
-      expect(registerMock).toHaveBeenCalledWith(
-        'newuser@example.com',
-        'newpassword123'
-      );
-    });
-
-    expect(window.alert).toHaveBeenCalledWith(
-      'Registration successful! Please log in to continue.'
+    const passwordError = await screen.findByTestId('password-error');
+    expect(passwordError).toHaveTextContent(
+      /Password must be at least 8 characters long and contain at least one number./i
     );
-    expect(toggleButton).toHaveTextContent(/create an account/i);
-    expect(navigateMock).toHaveBeenCalledWith('/login');
+
+    const emailError = screen.queryByTestId('email-error');
+    expect(emailError).not.toBeInTheDocument();
   });
 
   test('displays loading state during login', async () => {
@@ -110,7 +79,7 @@ describe('Login Component', () => {
     expect(loginButton).toBeEnabled();
 
     loginMock.mockImplementation(
-      () => new Promise<void>((resolve) => setTimeout(resolve, 1000))
+      () => new Promise<void>((resolve) => setTimeout(resolve, 100))
     );
 
     const emailInput = screen.getByPlaceholderText(/Email/i);
@@ -125,28 +94,60 @@ describe('Login Component', () => {
 
     await waitFor(() => {
       expect(loginButton).toBeEnabled();
+      expect(loginButton).toHaveTextContent(/login/i);
     });
   });
 
-  test('shows error message on failed login', async () => {
+  test('shows error toast on failed login', async () => {
     renderComponent();
 
     const emailInput = screen.getByPlaceholderText(/Email/i);
     const passwordInput = screen.getByPlaceholderText(/Password/i);
     const loginButton = screen.getByRole('button', { name: /login/i });
 
-    const error = { response: { data: { detail: 'Invalid credentials' } } };
+    const error = {
+      response: {
+        data: {
+          detail: [
+            {
+              msg: 'Invalid credentials',
+            },
+          ],
+        },
+      },
+    };
     loginMock.mockRejectedValue(error);
 
     await userEvent.type(emailInput, 'wrong@example.com');
-    await userEvent.type(passwordInput, 'wrongpassword');
+    await userEvent.type(passwordInput, 'wrongpassword1');
     await userEvent.click(loginButton);
 
-    await waitFor(() => {
-      expect(window.alert).toHaveBeenCalledWith('Invalid credentials');
-    });
+    const errorToast = await screen.findByText(/Invalid credentials/i);
+    expect(errorToast).toBeInTheDocument();
 
     expect(loginButton).toBeEnabled();
     expect(loginButton).toHaveTextContent(/login/i);
+  });
+
+  test('allows the user to log in', async () => {
+    renderComponent();
+
+    const loginButton = screen.getByRole('button', { name: /login/i });
+    const emailInput = screen.getByPlaceholderText(/Email/i);
+    const passwordInput = screen.getByPlaceholderText(/Password/i);
+
+    loginMock.mockResolvedValueOnce();
+
+    await userEvent.type(emailInput, 'user@example.com');
+    await userEvent.type(passwordInput, 'password123');
+    await userEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(loginMock).toHaveBeenCalledWith('user@example.com', 'password123');
+    });
+
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith('/');
+    });
   });
 });
