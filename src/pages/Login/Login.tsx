@@ -1,5 +1,3 @@
-// src/pages/LoginPage/Login.tsx
-
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import './Login.css';
@@ -17,30 +15,25 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  // State for validation errors
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  // Validation regex patterns
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*\d).{8,}$/;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Reset previous errors
     setEmailError('');
     setPasswordError('');
 
     let valid = true;
 
-    // Validate email
     if (!emailRegex.test(email)) {
       setEmailError('Please enter a valid email address.');
       valid = false;
     }
 
-    // Validate password
     if (!passwordRegex.test(password)) {
       setPasswordError(
         'Password must be at least 8 characters long and contain at least one number.'
@@ -62,7 +55,6 @@ const Login = () => {
         navigate('/');
       }
     } catch (error: any) {
-      // Extract meaningful error messages
       const errorMessage =
         error.response?.data?.detail?.[0]?.msg ||
         error.response?.data?.detail ||

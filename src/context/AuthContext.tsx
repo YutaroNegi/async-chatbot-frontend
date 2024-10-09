@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await loginApi(email, password);
       setIsAuthenticated(true);
     } catch (error) {
-      throw error; // Repassa o erro para ser tratado no componente que chamou
+      throw error;
     }
   };
 
