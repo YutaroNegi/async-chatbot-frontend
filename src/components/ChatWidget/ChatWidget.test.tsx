@@ -39,4 +39,36 @@ describe('ChatWidget Component', () => {
     const welcomeMessage = await screen.findByText(/hi, i'm ava/i);
     expect(welcomeMessage).toBeInTheDocument();
   });
+
+  test('fetches and displays messages when chat is opened', async () => {
+    (getMessages as Mock).mockResolvedValueOnce({
+      data: {
+        messages: [
+          {
+            id_message: '1',
+            content: 'Hello!',
+            is_bot: false,
+            timestamp: new Date().toISOString(),
+          },
+          {
+            id_message: '2',
+            content: 'Hi there!',
+            is_bot: true,
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      },
+    });
+
+    renderComponent();
+
+    userEvent.click(screen.getByRole('button', { name: /abrir chat/i }));
+
+    await waitFor(() => {
+      expect(getMessages).toHaveBeenCalled();
+    });
+
+    expect(screen.getByText('Hello!')).toBeInTheDocument();
+    expect(screen.getByText('Hi there!')).toBeInTheDocument();
+  });
 });
