@@ -71,4 +71,39 @@ describe('ChatWidget Component', () => {
     expect(screen.getByText('Hello!')).toBeInTheDocument();
     expect(screen.getByText('Hi there!')).toBeInTheDocument();
   });
+
+  test('sends a new message and displays bot response', async () => {
+    (sendMessage as Mock).mockResolvedValueOnce({
+      data: {
+        user_message: {
+          id_message: '3',
+          content: 'How are you?',
+          is_bot: false,
+          timestamp: new Date().toISOString(),
+        },
+        bot_response: {
+          id_message: '4',
+          content: 'I am fine, thank you!',
+          is_bot: true,
+          timestamp: new Date().toISOString(),
+        },
+      },
+    });
+
+    renderComponent();
+
+    userEvent.click(screen.getByRole('button', { name: /abrir chat/i }));
+
+    const input = await screen.findByPlaceholderText(/type your message/i);
+    await userEvent.type(input, 'How are you?');
+
+    const sendButton = screen.getByRole('button', { name: /send message/i });
+    userEvent.click(sendButton);
+
+    await waitFor(() => {
+      expect(sendMessage).toHaveBeenCalledWith('How are you?');
+    });
+
+    expect(screen.getByText('How are you?')).toBeInTheDocument();
+  });
 });
