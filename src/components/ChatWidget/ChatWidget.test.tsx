@@ -106,4 +106,41 @@ describe('ChatWidget Component', () => {
 
     expect(screen.getByText('How are you?')).toBeInTheDocument();
   });
+
+  test('deletes a message', async () => {
+    (getMessages as Mock).mockResolvedValueOnce({
+      data: {
+        messages: [
+          {
+            id_message: '6',
+            content: 'Message to delete',
+            is_bot: false,
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      },
+    });
+
+    (deleteMessage as Mock).mockResolvedValueOnce({});
+
+    renderComponent();
+
+    userEvent.click(screen.getByRole('button', { name: /abrir chat/i }));
+
+    await waitFor(() => {
+      expect(getMessages).toHaveBeenCalled();
+    });
+
+    userEvent.click(screen.getByLabelText('Opções da mensagem'));
+
+    const deleteButton = await screen.findByLabelText('Deletar mensagem');
+
+    userEvent.click(deleteButton);
+
+    await waitFor(() => {
+      expect(deleteMessage).toHaveBeenCalledWith('6');
+    });
+
+    expect(screen.queryByText('Message to delete')).not.toBeInTheDocument();
+  });
 });
