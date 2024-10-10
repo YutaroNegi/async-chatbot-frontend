@@ -95,37 +95,36 @@
 }
 
 .toggle-button {
-  margin-top: 1.25rem; /* 20px -> 1.25rem */
+  margin-top: 1.25rem;
   background: none;
   border: none;
-  color: #6a0dad; /* Purple color */
-  font-size: 0.875rem; /* 14px -> 0.875rem */
+  color: #6a0dad;
+  font-size: 0.875rem;
   cursor: pointer;
   text-decoration: underline;
 }
 
 .toggle-button:disabled {
-  color: #a078d1; /* Lighter purple when disabled */
+  color: #a078d1;
   cursor: not-allowed;
 }
 
 .toggle-button:hover:not(:disabled) {
-  color: #5a0ca9; /* Darker purple on hover */
+  color: #5a0ca9;
 }
 
 @media (max-width: 48rem) {
-  /* 768px -> 48rem */
   .login-page {
     flex-direction: column;
   }
 
   .login-left,
   .login-right {
-    padding: 1.25rem; /* 20px -> 1.25rem */
+    padding: 1.25rem;
   }
 
   .login-left h1 {
-    font-size: 2.25rem; /* 36px -> 2.25rem */
+    font-size: 2.25rem;
     text-align: center;
   }
 
