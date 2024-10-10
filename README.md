@@ -237,3 +237,9 @@ This frontend application is designed to integrate seamlessly with a backend API
 - [lint-staged Documentation](https://github.com/okonet/lint-staged)
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
 - [React Router DOM Documentation](https://reactrouter.com/)
+
+## System Design
+
+Below is the system design diagram for this project:
+
+![System Design](./system-design.png)
