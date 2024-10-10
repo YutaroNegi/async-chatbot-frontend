@@ -1,6 +1,3 @@
-/* src/components/ChatWidget/ChatWidget.css */
-
-/* Estilos Gerais */
 .chat-widget {
   position: fixed;
   bottom: 1.25rem;
@@ -33,7 +30,7 @@
   position: fixed;
   bottom: 1.25rem;
   right: 1.25rem;
-  width: 18.75rem;
+  width: 22rem;
   height: 38rem;
   background-color: white;
   border: 0.0625rem solid #ccc;
