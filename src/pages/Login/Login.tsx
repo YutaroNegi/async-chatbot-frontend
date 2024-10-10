@@ -71,6 +71,14 @@ const Login = () => {
       <div className="login-left">
         <h1>Welcome Back!</h1>
         <p>Log in to your account to continue.</p>
+        <div className="demo-credentials">
+          <p>Or you can use the following credentials to log in:</p>
+          <p>
+            <strong>Email:</strong> demo@demo.com
+            <br />
+            <strong>Password:</strong> demo1234
+          </p>
+        </div>
       </div>
       <div className="login-right">
         <h2>{isRegisterMode ? 'Register' : 'Login'}</h2>
