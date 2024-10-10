@@ -1,6 +1,6 @@
 ## 🗒️ Description
 
-This project is a frontend application. It features a chat widget that allows users to interact with a chatbot, supporting actions such as sending, editing, and deleting messages. The frontend is built using **React**, **TypeScript**, and **Vite**, and integrates with a backend API developed using **Python** and **FastAPI**.
+This project is a frontend application that provides a chat interface for users to interact with a chatbot. Users can send messages, edit, and delete them within the chat widget. The application also includes user authentication features such as login and registration. The frontend is built using **React**, **TypeScript**, and **Vite**, and integrates with a backend API developed using **Python** and **FastAPI**.
 
 ## 🚀 Technologies Used
 
@@ -26,6 +26,7 @@ This project is a frontend application. It features a chat widget that allows us
   - lint-staged
 
 - **Other Tools:**
+
   - Git
   - GitHub
 
@@ -34,16 +35,31 @@ This project is a frontend application. It features a chat widget that allows us
 ```
 async-chatbot-frontend/
 ├── src/
+│   ├── assets/
+│   │   └── ava-profile.png
 │   ├── components/
-│   │   ├── ChatWidget.tsx
-│   │   └── ChatWidget.test.tsx
+│   │   └── ChatWidget/
+│   │       ├── ChatWidget.tsx
+│   │       └── ChatWidget.test.tsx
 │   ├── context/
+│   │   ├── AuthContext.tsx
 │   │   └── ChatContext.tsx
 │   ├── pages/
-│   │   ├── Home.tsx
-│   │   └── Home.test.tsx
+│   │   ├── Home/
+│   │   │   ├── Home.tsx
+│   │   │   └── Home.test.tsx
+│   │   ├── Login/
+│   │   │   ├── Login.tsx
+│   │   │   └── Login.test.tsx
+│   │   ├── Register/
+│   │   │   ├── Register.tsx
+│   │   │   └── Register.test.tsx
+│   │   └── NotFound/
+│   │       └── NotFound.tsx
+│   ├── services/
+│   │   ├── authService.ts
+│   │   └── chatService.ts
 │   ├── App.tsx
-│   ├── App.test.tsx
 │   ├── main.tsx
 │   ├── setupTests.ts
 │   └── index.css
@@ -94,6 +110,10 @@ npm run dev
 
 Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the application.
 
+### 5. Run the Backend API
+
+Ensure the backend API is running and accessible at the URL specified in the `.env` file (`VITE_API_URL`). Refer to the backend repository for setup instructions.
+
 ## 🧪 Testing
 
 ### Run Tests
@@ -107,6 +127,8 @@ npm run test
 ### Test Coverage
 
 - **Component Rendering:** Ensures components render correctly.
+- **Chat Functionality:** Tests sending, editing, and deleting messages.
+- **Authentication:** Tests for login and registration functionalities.
 
 ## 🔧 Code Formatting and Linting
 
@@ -170,25 +192,48 @@ This frontend application is designed to integrate seamlessly with a backend API
 
 ### API Endpoints
 
-- **Send Message:** `POST /messages/`
-- **Edit Message:** `PUT /messages/{id_message}`
-- **Delete Message:** `DELETE /messages/{id_message}`
-- **List Messages:** `GET /messages/`
+- **Authentication:**
+  - **Login:** `POST /login/`
+  - **Register:** `POST /register/`
+- **Chat Messages:**
+  - **Send Message:** `POST /messages/`
+  - **Edit Message:** `PUT /messages/{id_message}`
+  - **Delete Message:** `DELETE /messages/{id_message}`
+  - **List Messages:** `GET /messages/`
 
----
+## 🛠️ Features
 
-## 🛠️ Setup Instructions
+### Chat Widget
 
-For detailed setup instructions, refer to the sections above.
+- **Send Messages:** Interact with the chatbot by sending messages.
+- **Edit Messages:** Modify your sent messages.
+- **Delete Messages:** Remove messages you no longer want to keep.
+- **Typing Indicator:** See the bot typing effect when responding.
 
----
+### Authentication
+
+- **User Registration:** Create a new account to start using the application.
+- **User Login:** Access your account by logging in with your credentials.
+- **Protected Routes:** Secure pages that require authentication to access.
+
+## 🛡️ Security
+
+- **Token-Based Authentication:** Uses JWT tokens to secure user authentication.
+- **Secure API Calls:** All API requests include authentication headers where necessary.
+
+## 📖 Additional Documentation
+
+- **API Documentation:** Refer to the backend API documentation for detailed endpoint information.
 
 ## 📚 Resources
 
 - [React Documentation](https://reactjs.org/docs/getting-started.html)
 - [Vite Documentation](https://vitejs.dev/guide/)
 - [Vitest Documentation](https://vitest.dev/)
+- [React Testing Library Documentation](https://testing-library.com/docs/react-testing-library/intro/)
 - [Prettier Documentation](https://prettier.io/docs/en/index.html)
 - [ESLint Documentation](https://eslint.org/docs/user-guide/getting-started)
 - [Husky Documentation](https://typicode.github.io/husky/#/)
 - [lint-staged Documentation](https://github.com/okonet/lint-staged)
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [React Router DOM Documentation](https://reactrouter.com/)
